@@ -1,4 +1,5 @@
 # React-FAQ-Accordion
+
 A responsive accordion component built with React and Tailwind CSS, featuring smooth expand/collapse functionality and dark mode support.
 
 🚀 Features
