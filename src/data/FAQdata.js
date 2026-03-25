@@ -1,4 +1,4 @@
-const faqData = [
+ const faqData = [
   {
     id: 1,
     question: "What is Tailwind CSS?",
@@ -40,3 +40,5 @@ const faqData = [
     answer: "Yes, Tailwind provides responsive utility classes like sm, md, lg, and xl to design layouts for different screen sizes."
   }
 ];
+
+export default faqData;

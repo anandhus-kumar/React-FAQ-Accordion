@@ -22,7 +22,7 @@ const App = () => {
             {" "}
             FAQ Center
           </h1>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto dark:text-white transition-colors duration-300">
+          <p className="text-lg text-gray-600 max-w-2xl mx-auto dark:text-gray-300 transition-colors duration-300">
             {" "}
             Find answers to the most common question about React
           </p>
