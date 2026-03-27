@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import FAQItem from "./FAQItem";
 import faqData from "../data/FAQdata";
 
@@ -9,19 +9,33 @@ const FAQlist = ({ toggleDarkMode, darkMode }) => {
   function toggleItem(id) {
     if (expandAll) {
       setExpandAll(false);
-      setOpenId((curr) => {
-        if (curr === id) {
-          return null;
-        }
-        return id;
-      });
     }
+    setOpenId((curr) => {
+      if (curr === id) {
+        return null;
+      }
+      return id;
+    });
   }
 
   function toggleExpandAll() {
     setExpandAll((curr) => !curr);
     setOpenId(null);
   }
+
+  useEffect(() => {
+    if (openId && typeof window !== "undefined") {
+      setTimeout(() => {
+        const element = document.getElementById(`faq-item-${openId}`);
+        if (element) {
+          element.scrollIntoView({
+            behavior: "smooth",
+            block: "start",
+          });
+        }
+      }, 100);
+    }
+  }, [openId]);
   return (
     <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <div className="flex flex-col sm:flex-row justify-between items-center mb-8 gap-4">
@@ -34,8 +48,10 @@ const FAQlist = ({ toggleDarkMode, darkMode }) => {
             onClick={toggleExpandAll}
             className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 rounded-lg shadow-sm hover:shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 transition-all duration-300 cursor-pointer "
           >
-            <i className="bx bx-collapse-alt text-lg"></i>
-            <span>Expand All</span>
+            <i
+              className={`bx ${expandAll ? "bx-collapse-alt" : "bx-expand-alt"} text-lg`}
+            ></i>
+            <span>{expandAll ? "Collapse All" : "Expand All"}</span>
           </button>
           <button
             onClick={toggleDarkMode}
@@ -59,9 +75,8 @@ const FAQlist = ({ toggleDarkMode, darkMode }) => {
           <FAQItem
             key={item.id}
             item={item}
-            onToggleItem={toggleItem}
-            openId={openId}
-            onToggleExpandAll={toggleExpandAll}
+            onClick={toggleItem}
+            isOpen={expandAll || openId === item.id}
           />
         ))}
       </div>
